@@ -2,6 +2,14 @@ import { Router } from 'express';
 
 const routes = new Router();
 
-import SessionController from './app/controllers/SessionController';
+import authMiddleware from './app/middlewares/authMiddleware';
 
-routes.post('/session', SessionController.store);
+import SessionController from './app/controllers/SessionController';
+import RecipientController from './app/controllers/RecipientController';
+
+routes.post('/sessions', SessionController.store);
+
+routes.put('/recipients', authMiddleware, RecipientController.update);
+routes.post('/recipients', authMiddleware, RecipientController.store);
+
+export default routes;
